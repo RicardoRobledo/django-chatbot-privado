@@ -50,8 +50,8 @@ let array_voices = [];
 let filterBotWords = ["Robot:", "Bot:"];
 
 let base_url = 'https://django-chatbot-privado.onrender.com/api/';
+//let base_url = 'http://127.0.0.1:8000/api/';
 let data_procedures = [];
-let procedure = '';
 let index_procedure = 0;
 
 
@@ -229,8 +229,7 @@ function loadData(url, urls) {
 
 		$(".ai-contacts-scroll").empty();
 
-		let text = $(this).val().toLowerCase();
-		set_procedure(text);
+		let text = $(this).val();
 
 		let filtered_data_procedure = []
 
@@ -254,11 +253,66 @@ function loadData(url, urls) {
 	$("#welcome-message").show();
 	$("#first-message").hide();
 	$(".btn-send-chat").hide();
+	$("#menu").hide();
+
+	if(!localStorage.hasOwnProperty('thread_id')){
+		// get CSRFToken
+	    function getCSRFToken() {
+		    const csrfCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('csrftoken='));
+	
+		    if (csrfCookie) {
+			    const csrfToken = csrfCookie.split('=')[1];
+			    return csrfToken;
+		    } else {
+			    console.error('No se pudo encontrar el token CSRF en las cookies.');
+			    return null;
+		    }
+	    }
+
+	    // get Conversation Thread
+	    $.ajax({
+		    url: `${base_url}chatbot/thread/`,
+		    type: 'POST', // o 'POST' u otro método HTTP según tus necesidades
+		    dataType: 'json', // el tipo de datos que esperas recibir del servidor
+		    headers: {
+			    // Agrega el token CSRF a la cabecera
+			    "X-CSRFToken": getCSRFToken()
+		    },
+		    success: function(data) {
+		      localStorage.setItem('thread_id', data['thread_id']);
+		    },
+		    error: function(error) {
+		      // Maneja el error en la petición
+		      console.error('Error en la petición:', error);
+		    }
+	    });
+
+	}
 
 	}).catch(err => { throw err })
 }
 
 //archivos = [];
+function deactivateChat(){
+	$("#chat").prop("disabled", true);
+	$("#microphone-button").hide();
+	$("#welcome-message").show();
+	$("#first-message").hide();
+	$(".btn-send-chat").hide();
+	$("#menu").hide();
+}
+
+
+function activateChat(){
+	$(".col-contacts-border").hide();
+	$("#chat").prop("disabled", false);
+	$("#microphone-button").show();
+	$(".btn-send-chat").show();
+	$("#welcome-message").hide()
+	$("#first-message").show();
+	$("#menu").show();
+}
+
 
 
 // -------------------------------------------------
@@ -309,28 +363,34 @@ function list_data(data){
 
 }
 
-function set_procedure(text){
-
-	procedure = text;
-
-}
 
 function select_procedure(index, text){
 
 	index_procedure = index;
 
-	$(".col-contacts-border").css("display", "none");
-	$("#chat").prop("disabled", false);
-	$("#microphone-button").show();
-	$(".btn-send-chat").show();
-	$("#welcome-message").hide()
-	$("#first-message").show();
+	activateChat();
 
+	$("#overflow-chat").empty();
+	$("#overflow-chat").append(`
+	<div class="conversation-thread thread-ai" id="first-message">
+        ${avatar_in_chat}
+	  <div class="message-container">
+	    <div class="message-info">
+		    ${copy_text_in_chat}
+		    ${audio_in_chat}            
+	    <div class="user-name"><h5>${employee_name}</h5></div>
+	        <div class="message-text">
+		    <div class="chat-response" id="message-procedure">${welcome_message} {procedure}</div>
+	    </div>
+		    <div class="date-chat"><img src="../../static/img/icon-clock.svg"> ${current_date}</div>
+	    </div>
+      </div>
+    </div>`);
 	var contenidoOriginal = $("#message-procedure").text();
-	var contenidoModificado = contenidoOriginal.replace("{procedure}", text);
+	var contenidoModificado = contenidoOriginal.replace("{procedure}", data_procedures[index_procedure].text);
 	$("#message-procedure").text(contenidoModificado);
 
-	function getCSRFToken() {
+	/*function getCSRFToken() {
 		const csrfCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('csrftoken='));
 	
 		if (csrfCookie) {
@@ -357,7 +417,7 @@ function select_procedure(index, text){
 		  // Maneja el error en la petición
 		  console.error('Error en la petición:', error);
 		}
-	  });
+	  });*/
 
 }
 
@@ -371,8 +431,7 @@ function currentDate() {
 	return timestamp.toLocaleString();
 }
 
-$(window).on('beforeunload', function() {
-
+function deleteConversationThread(){
 	var requestOptions = {
 		method: 'POST',
 		headers: {
@@ -386,8 +445,40 @@ $(window).on('beforeunload', function() {
 	if(localStorage.getItem('thread_id') !== null){
 		localStorage.removeItem('thread_id');
 	}
+}
 
+$('#logout').on('click', function() {
+	deleteConversationThread();
 });
+
+$(window).on('beforeunload', function() {
+	deleteConversationThread();
+});
+
+$('#menu').on('click', function() {
+	$(".col-contacts-border").show();
+	$("#menu").hide();
+	deactivateChat();
+	$("#message-procedure").text();
+
+	$("#overflow-chat").empty();
+	$("#overflow-chat").append(`
+    <div class="conversation-thread thread-ai" id="welcome-message">
+      ${avatar_in_chat}
+	    <div class="message-container">
+	    <div class="message-info">
+		    ${copy_text_in_chat}
+		    ${audio_in_chat}            
+	    <div class="user-name"><h5>${employee_name}</h5></div>
+	      <div class="message-text">
+		    <div class="chat-response">${'¿Que tal?, Selecciona un trámite de la izquierda sobre el que tengas dudas'}</div>
+	      </div>
+		    <div class="date-chat"><img src="../../static/img/icon-clock.svg"> ${current_date}</div>
+	    </div>
+      </div>
+    </div>`);
+});
+
 
 // Defina um placeholder para a imagem
 const placeholder = "../../static/img/placeholder.svg";

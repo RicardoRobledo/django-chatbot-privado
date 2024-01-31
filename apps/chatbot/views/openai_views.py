@@ -14,7 +14,6 @@ from ...procedures.design_patterns.creational_patterns.pinecone_singleton import
 
 from ...procedures.utils.prompt_handlers.prompt_procedure import format_prompt
 from ...procedures.models import Procedure, ProcedureURL
-from ...procedures.utils.cleaners.format_cleaners import clean_format
 
 
 @async_api_view(['POST'])
@@ -27,7 +26,7 @@ async def post_message(request):
     query_dict = request.data
     array_chat_str = query_dict.get('array_chat', '')
     thread_id = query_dict.get('thread_id', '')
-    title = query_dict.get('title', '').replace(' ', '-')
+    title = query_dict.get('title', '')
 
     # become in json
     # {
@@ -35,6 +34,7 @@ async def post_message(request):
     #    'content': 'abc...'
     # }
     array_chat_json = json.loads(array_chat_str)
+
 
     # getting chunks in vectorial database
     PineconeSingleton()

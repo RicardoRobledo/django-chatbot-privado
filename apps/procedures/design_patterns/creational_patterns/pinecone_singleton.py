@@ -5,8 +5,6 @@ from langchain_community.vectorstores import Pinecone as VSPinecone
 from langchain_openai import OpenAIEmbeddings
 from pinecone import Pinecone
 
-from ...utils.cleaners.format_cleaners import clean_format
-
 
 __author__ = 'Ricardo'
 __version__ = '0.1'
@@ -101,6 +99,6 @@ class PineconeSingleton():
         """
 
         vspinecone = VSPinecone.from_existing_index('tramites', cls.__embeddings)
-        docs = await vspinecone.asimilarity_search(text, k=4, namespace=clean_format(title))
+        docs = await vspinecone.asimilarity_search(text, k=4, namespace='tramites-guadalajara', filter={'title':title})
         
         return docs

@@ -15,6 +15,6 @@ class ProcedureRepository():
     async def get_bcs_list_procedures(self):
 
         procedures = await sync_to_async(list)(Procedure.objects.all())
-        procedures = [{'text':procedure.title.replace('-', ' ')} for procedure in procedures]
+        procedures = [{'text':procedure.title} for procedure in procedures]
 
         return procedures
