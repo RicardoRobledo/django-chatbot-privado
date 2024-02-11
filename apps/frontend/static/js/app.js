@@ -197,7 +197,7 @@ function loadData(url, urls) {
 		${audio_in_chat}            
 	<div class="user-name"><h5>${employee_name}</h5></div>
 	  <div class="message-text">
-		<div class="chat-response">${'¿Que tal?, Selecciona un trámite de la izquierda sobre el que tengas dudas'}</div>
+		<div class="chat-response">${'¿Que tal?, Selecciona un trámite sobre el que tengas dudas'}</div>
 	  </div>
 		<div class="date-chat"><img src="../../static/img/icon-clock.svg"> ${current_date}</div>
 	</div>
@@ -221,7 +221,7 @@ function loadData(url, urls) {
 `);
 
     $(".ai-contacts-top").html(`
-      <h4>Buscar trámite:</h4>
+	  <strong style="color: black">Busca y selecciona un trámite:</strong>
       <input type="text">
     `)
 
@@ -471,7 +471,7 @@ $('#menu').on('click', function() {
 		    ${audio_in_chat}            
 	    <div class="user-name"><h5>${employee_name}</h5></div>
 	      <div class="message-text">
-		    <div class="chat-response">${'¿Que tal?, Selecciona un trámite de la izquierda sobre el que tengas dudas'}</div>
+		    <div class="chat-response">${'¿Que tal?, Selecciona un trámite sobre el que tengas dudas'}</div>
 	      </div>
 		    <div class="date-chat"><img src="../../static/img/icon-clock.svg"> ${current_date}</div>
 	    </div>

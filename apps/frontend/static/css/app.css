@@ -784,18 +784,18 @@ footer img:hover{
         box-shadow: none;
         border:none;
     }
-    .ai-contacts-top{
+    /*.ai-contacts-top{
         display: none;
     }
     .ai-contacts-top{
         border:0;
         display: none;
-    }
+    }*/
     footer{
         display: none;
     }
     .toggle_employees_list, .ai-contacts-scroll{
-        display: none;
+        /*display: none;*/
     }
     .icons-options img {
         padding: 0 2px;
@@ -835,6 +835,9 @@ footer img:hover{
     .thread-ai .message-container{
         margin-right: 0;
     }
+    .chat-frame{
+        margin-top: 40px;
+    }
     .message-area-bottom{
         position: fixed;
         bottom: 0;
@@ -866,24 +869,9 @@ footer img:hover{
     .header-min{
         display: none;
     }
-    .col-contacts-border{
+    /*.col-contacts-border{
         display: none;
-    }
-    .ai-chat-top-image{
-        min-width: 45px;
-        width: 45px;
-        height: 45px;
-    }
-    .ai-chat-top{
-        top:0;
-        padding: 0.5em;
-        position: fixed;
-        z-index: 2;
-        background: #FFF;
-        border-radius: 0;
-        width: 100%;
-        box-shadow: 1px 1px 14px 3px #ccc;
-    }
+    }*/
     .card-ai-bottom {
         padding: 1em;
         display: flex;
@@ -923,7 +911,30 @@ footer img:hover{
     }
     .container{
         max-width: 100%;
-    }     
+    }
+    .ai-chat-top-image{
+        min-width: 45px;
+        width: 45px;
+        height: 45px;
+    }
+    .ai-chat-top{
+        top:0;
+        padding: 0.5em;
+        position: fixed;
+        z-index: 2;
+        background: #FFF;
+        border-radius: 0;
+        width: 100%;
+        box-shadow: 1px 1px 14px 3px #ccc;
+    }
+    .col-contacts-border{
+        margin-top: 80px;
+        background-color: white;
+    }
+    .icons-options{
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 /*/ Medium devices (tablets, 768px and up)/*/
@@ -957,7 +968,7 @@ footer img:hover{
         max-width: 100%;
     }
     .col-contacts-border{
-        display: none;
+        /*display: none;*/
     }
     .copy-text{
         display: block;
@@ -1003,7 +1014,6 @@ footer img:hover{
         min-height: 300px;
     }
 }
-
 
 .text-card-container{
     background-color: rgb(60, 120, 248);
