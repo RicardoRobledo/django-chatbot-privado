@@ -49,8 +49,8 @@ let array_messages = [];
 let array_voices = [];
 let filterBotWords = ["Robot:", "Bot:"];
 
-let base_url = 'https://django-chatbot-privado.onrender.com/api/';
-//let base_url = 'http://127.0.0.1:8000/api/';
+//let base_url = 'https://django-chatbot-privado.onrender.com/api/';
+let base_url = 'http://127.0.0.1:8000/api/';
 let data_procedures = [];
 let index_procedure = 0;
 
@@ -164,7 +164,7 @@ function loadData(url, urls) {
 			$(".ai-chat-top-name").html(`<h4>${employee_name} <span class="online-bullet"></span></h4>`)
 			$(".ai-chat-top-job").html(employee_expert)
 
-			avatar_in_chat = `<div class="user-image"><img onerror="this.src='../../static/img/no-image.svg'" src="../../static/img/bot.svg"></div>`;
+			avatar_in_chat = `<div class="user-image"><img onerror="this.src='../../static/img/no-image.svg'" src="../../static/img/bot.png"></div>`;
 
 			audio_in_chat = `<div class='chat-audio'><img data-play="false" src='../../static/img/btn_tts_play.svg'></div>`;
 			copy_text_in_chat = `<button class="copy-text" onclick="copyText(this)"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg> <span class="label-copy-code">${'copiar texto'}</span></button>`;
